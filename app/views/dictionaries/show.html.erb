@@ -1,0 +1,14 @@
+<h1><%= @dictionary.name %></h1>
+<h2>Random Words</h2>
+<p>
+  <% @sample.each do |w| %>
+    <span><%= w %></span>
+  <% end %>
+</p>
+
+<h2>All Words</h2>
+<p>
+  <% @dictionary.dictionary_words.each do |w| %>
+    <span><%= w.text %></span>
+  <% end %>
+</p>

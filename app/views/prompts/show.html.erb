@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @prompt.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @prompt.body %>
+</p>
+
+<p>
+  <strong>Challenge Generation Progress:</strong>
+  Generated <%= @prompt.generated_challenges.count %> out of
+  <%= @prompt.challenges.count %> challenges
+</p>
+
+<%= link_to 'Edit', edit_prompt_path(@prompt) %> |
+<%= link_to 'Back', prompts_path %>
