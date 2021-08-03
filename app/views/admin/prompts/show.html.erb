@@ -16,5 +16,5 @@
   <%= @prompt.challenges.count %> challenges
 </p>
 
-<%= link_to 'Edit', edit_prompt_path(@prompt) %> |
-<%= link_to 'Back', prompts_path %>
+<%= link_to 'Edit', [ :edit, :admin, @prompt ] %> |
+<%= link_to 'Back', admin_prompts_path %>

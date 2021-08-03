@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PromptsControllerTest < ActionDispatch::IntegrationTest
+class RaceTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

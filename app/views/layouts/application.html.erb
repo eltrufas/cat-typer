@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Typemaster</title>
+    <title>CatTyper</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,32 @@
   </head>
 
   <body>
+    <div class="container">
+    <nav class="navbar navbar-light">
+      <div class="container-fluid">
+      <a href="/" class="navbar-brand">CatTyper</a>
+      <ul class="navbar-nav me-auto">
+        <% if user_signed_in? && current_user.admin? %>
+          <li class="nav-item">
+            <%= link_to "Manage Prompts", admin_prompts_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+      <div>
+        <% if user_signed_in? %>
+          <%= current_user.email %>|
+          <strong>Last 10 Races:</strong>
+          <%= number_with_precision current_user.wpm, precision: 2 %> WPM |
+          <%= link_to "Sign out", destroy_user_session_path, class: "link-secondary", :method => :delete %>
+        <% else %>
+          <%= link_to "Sign in", new_user_session_path %> |
+          <%= link_to "Sign up", new_user_registration_path %>
+        <% end %>
+      </div>
+      </div>
+    </nav>
+    <p id="notice"><%= notice %></p>
     <%= yield %>
+    </div>
   </body>
 </html>

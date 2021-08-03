@@ -1,4 +1,4 @@
-<%= form_with(model: prompt) do |form| %>
+<%= form_with(model: [:admin, prompt]) do |form| %>
   <% if prompt.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(prompt.errors.count, "error") %> prohibited this prompt from being saved:</h2>

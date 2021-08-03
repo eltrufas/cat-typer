@@ -1,0 +1,29 @@
+<h2>Race based on <%= @prompt.title %></h2>
+<%= turbo_frame_tag "race" do %>
+    <%= content_tag "div", data: {"controller" => "race", "race-effective-words-value" => @challenge.effective_words} do %>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 0;" data-race-target="progress"></div>
+      </div>
+      <p class="race-content">
+        <span class="text-muted race-preamble"><%= @challenge.preamble %></span>
+        <% @challenge.tokens.each do |token| %>
+          <span data-race-target="word" class="word"><% token.split("").each do |letter| %><span class="letter"><%= letter %></span><% end %>
+          </span>
+        <% end %>
+      </p>
+      <div>
+        <input
+          type="text"
+          class="form-control"
+          data-race-target="racetrack"
+          data-action="race#updateBuffer"
+          placeholder="Start typing here to start"
+        >
+      </div>
+      <%= form_with url: prompt_races_complete_path(@prompt), scope: :race, data: {'race-target': 'finishForm'} do |form| %>
+        <%= form.hidden_field :challenge_id, value: @challenge.id %>
+        <%= form.hidden_field :time %>
+        <%= form.hidden_field :mistakes %>
+      <% end %>
+  <% end %>
+<% end %>

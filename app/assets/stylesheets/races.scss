@@ -1,0 +1,25 @@
+// Place all the styles related to the Races controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.race-content {
+  font-size: 1.2em;
+}
+
+.race-preamble {
+  text-decoration: underline;
+}
+
+.word.cleared {
+  color: green;
+  text-decoration: underline;
+}
+
+.letter {
+  &.cleared {
+    color: green;
+  }
+  &.mistake {
+    background-color: red
+  }
+}

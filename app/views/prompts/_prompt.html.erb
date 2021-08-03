@@ -1,0 +1,9 @@
+<div class="card h-100">
+  <div class="card-body">
+    <h5 class="card-title"><%= prompt.title %></h5>
+    <h6 class="card-subtitle mb-2 text-muted">Description</h6>
+    <p><strong>Prompt: </strong><%= prompt.body %></p>
+    <%= link_to "Run This Prompt", prompt_races_new_path(prompt),
+                { :class => "card-link link-primary"}%>
+  </div>
+</div>

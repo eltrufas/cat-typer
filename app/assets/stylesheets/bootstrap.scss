@@ -1,0 +1,28 @@
+$body-bg: #fafafa;
+$body-color: #575f66;
+
+// #ABB0B6
+// #F07178
+// #A37ACC
+// #E7C547
+// #36A3D9
+// #4CBF99
+// #86B300
+// #F29718
+// #E6B673
+// #FF7733
+// #FF3333
+// #FF6A00
+
+$theme-colors: (
+  "primary": #36A3D9,
+  "secondary": #ABB0B6,
+);
+
+@import 'bootstrap/scss/bootstrap';
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 18px; 
+}

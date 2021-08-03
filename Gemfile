@@ -25,7 +25,9 @@ gem 'redis', '~> 4.0'
 gem 'hotwire-rails'
 gem 'friendly_id', '~> 5.4.0'
 gem 'faraday'
+gem 'faraday_middleware'
 gem 'sidekiq'
+gem 'devise'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

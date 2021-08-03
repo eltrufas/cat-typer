@@ -1,0 +1,21 @@
+<%= turbo_frame_tag "race" do %>
+  <h2>Race Complete!</h2>
+
+  <h3>You just typed:</h3>
+  <p><%= @challenge.text %></p>
+
+  <p>
+    <strong>Time:</strong>
+    <%= @race.formatted_time %>
+  </p>
+  <p>
+    <strong>WPM:</strong>
+    <%= number_with_precision @race.wpm, precision: 2 %>
+  </p>
+  <p>
+    <strong>Accuracy:</strong>
+    <%= number_with_precision @race.accuracy, precision: 2 %>
+  </p>
+
+  <%= link_to 'Go again!', prompt_races_new_path(@prompt) %>
+<% end %>

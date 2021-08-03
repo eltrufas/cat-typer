@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_074243) do
+ActiveRecord::Schema.define(version: 2021_08_03_050305) do
 
   create_table "challenges", force: :cascade do |t|
     t.text "text"
@@ -54,6 +54,32 @@ ActiveRecord::Schema.define(version: 2021_08_02_074243) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "races", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "challenge_id"
+    t.integer "time"
+    t.integer "mistakes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["challenge_id"], name: "index_races_on_challenge_id"
+    t.index ["user_id"], name: "index_races_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "role", default: "user", null: false
+    t.float "wpm"
+    t.float "accuracy"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "dictionary_words", "dictionaries"
