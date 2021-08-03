@@ -10,7 +10,4 @@ Rails.application.routes.draw do
   end
 
   root to: 'prompts#index'
-
-  post "/webhooks/challenges", to: "challenges#webhook"
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
