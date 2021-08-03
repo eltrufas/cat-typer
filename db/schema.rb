@@ -12,11 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2021_08_03_050305) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "challenges", force: :cascade do |t|
     t.text "text"
     t.boolean "generated", default: false, null: false
     t.boolean "used", default: false, null: false
-    t.integer "prompt_id"
+    t.bigint "prompt_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["prompt_id"], name: "index_challenges_on_prompt_id"
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 2021_08_03_050305) do
     t.text "text", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "dictionary_id"
+    t.bigint "dictionary_id"
     t.index ["dictionary_id"], name: "index_dictionary_words_on_dictionary_id"
   end
 
@@ -57,8 +60,8 @@ ActiveRecord::Schema.define(version: 2021_08_03_050305) do
   end
 
   create_table "races", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "challenge_id"
+    t.bigint "user_id"
+    t.bigint "challenge_id"
     t.integer "time"
     t.integer "mistakes"
     t.datetime "created_at", precision: 6, null: false

@@ -16,7 +16,7 @@ class User < ApplicationRecord
   end
 
   def latest_races
-    races.order(:created_at, :desc).limit(10)
+    races.order(created_at: :desc).limit(10)
   end
 end
 

@@ -7,7 +7,7 @@ class Challenge < ApplicationRecord
   end
 
   def tokens
-    text.strip.gsub(/\s+/m, ' ').strip.split(" ")
+    text.gsub(/[\s\u00A0]+/m, ' ').strip.split(" ")
   end
 
   def effective_words

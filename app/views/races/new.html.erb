@@ -1,16 +1,23 @@
 <h2>Race based on <%= @prompt.title %></h2>
 <%= turbo_frame_tag "race" do %>
-    <%= content_tag "div", data: {"controller" => "race", "race-effective-words-value" => @challenge.effective_words} do %>
+    <%= content_tag "div", data: {"controller" => "race", "race-effective-words-value" => @challenge.effective_words}, class: "race-container" do %>
+
+      <div data-race-target="stats" class="d-flex w-100">
+        Challenge not started!
+      </div>
+
       <div class="progress">
         <div class="progress-bar" role="progressbar" style="width: 0;" data-race-target="progress"></div>
       </div>
+
       <p class="race-content">
         <span class="text-muted race-preamble"><%= @challenge.preamble %></span>
         <% @challenge.tokens.each do |token| %>
-          <span data-race-target="word" class="word"><% token.split("").each do |letter| %><span class="letter"><%= letter %></span><% end %>
+          <span data-race-target="word" class="word"><% token.strip.split("").each do |letter| %><span class="letter"><%= letter %></span><% end %>
           </span>
         <% end %>
       </p>
+
       <div>
         <input
           type="text"
@@ -20,6 +27,17 @@
           placeholder="Start typing here to start"
         >
       </div>
+
+      <template data-race-target="statsTemplate">
+        <div id="time">
+          <strong>Time: </strong> 00:00
+        </div>
+
+        <div id="wpm">
+          0 WPM
+        </div>
+      </template>
+
       <%= form_with url: prompt_races_complete_path(@prompt), scope: :race, data: {'race-target': 'finishForm'} do |form| %>
         <%= form.hidden_field :challenge_id, value: @challenge.id %>
         <%= form.hidden_field :time %>

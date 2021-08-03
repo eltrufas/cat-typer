@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
+.race-container {
+  max-width: xs
+}
+
 .race-content {
   font-size: 1.2em;
 }

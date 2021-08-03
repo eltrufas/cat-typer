@@ -8,6 +8,7 @@ class TextGenerator
   end
 
   def generate(challenge, max_length)
+    logger.info "hi"
     response = http_client.post(
       '/models/gpt2-large',
       {
@@ -38,5 +39,9 @@ class TextGenerator
       f.request :json
       f.response :json
     end
+  end
+  
+  def logger
+    Rails.logger
   end
 end

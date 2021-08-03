@@ -1,136 +1,166 @@
-import { Controller } from "stimulus"
-import {Interval, intervalToDuration, format } from 'date-fns'
+import { Controller } from "stimulus";
+import { Interval, intervalToDuration, format } from "date-fns";
 
 export default class extends Controller {
-  static targets = ["word", "stopwatch", "wpm", 'finishForm', "progress", "racetrack"]
+  static targets = [
+    "word",
+    "wpm",
+    "finishForm",
+    "progress",
+    "racetrack",
+    "statsTemplate",
+    "stats",
+  ];
   static values = {
-    effectiveWords: Number
-  }
+    effectiveWords: Number,
+  };
 
   initialize() {
-    this.wordIndex = 0
-    this.wordsCleared = 0
-    this.mistakes = {}
+    this.wordIndex = 0;
+    this.wordsCleared = 0;
+    this.mistakes = {};
   }
 
   connect() {
-    this.started = false
-    this.stopwatch = 0
-    this.interval = setInterval(this.updateTimer.bind(this), 500)
-    this.racetrackTarget.focus()
+    this.started = false;
+    this.racetrackTarget.focus();
   }
 
   disconnect() {
-    if (this.clock) {
-      clearInterval(this.clock)
+    if (this.interval) {
+      clearInterval(this.interval);
     }
   }
 
   progress() {
-    return this.wordsCleared / this.effectiveWordsValue
+    return this.wordsCleared / this.effectiveWordsValue;
   }
 
   updateProgressBar() {
-    this.progressTarget.style.width = `${this.progress() * 100}%`
+    this.progressTarget.style.width = `${this.progress() * 100}%`;
   }
 
-  updateTimer() {
-    if (!this.started) {
-      this.stopwatchTarget.innerHTML = "Start typing below to start!"
-      return
+
+  initStatsTarget() {
+    this.statsTarget.innerHTML = this.statsTemplateTarget.innerHTML
+  }
+
+  renderStats() {
+    let { time, wpm } = this.computeStats()
+    let wpmDisplay = this.statsTarget.querySelector('#wpm')
+    let timeDisplay = this.statsTarget.querySelector('#time')
+
+    if (wpmDisplay) {
+      wpmDisplay.innerHTML = `${wpm.toFixed(2)} WPM`
     }
-    let duration = new Date() - this.startTime
-    this.renderStopwatch(duration)
-  }
 
-  renderStopwatch(duration) {
-    this.stopwatchTarget.innerHTML =
-      `<strong>Time:</strong> ${format(duration, 'mm:ss')}`
+    if (timeDisplay) {
+      timeDisplay.innerHTML = `<strong>Time:</strong> ${format(
+        time,
+        "mm:ss"
+      )}`;
+    }
   }
 
   currentWord() {
-    return this.wordTargets[this.wordIndex]
+    return this.wordTargets[this.wordIndex];
   }
 
   computeStats() {
-    let duration = new Date() - this.startTime
-    let wpm = this.wordsCleared / (duration / 60000)
-    let mistakes = this.mistakeCount()
-    let accuracy = 1 - mistakes / this.wordTargets.length
-    return { cleared: this.wordsCleared, wpm, time: duration, mistakes, accuracy }
+    let time = new Date() - this.startTime;
+    let wpm = this.wordsCleared / (time / 60000);
+    let mistakes = this.mistakeCount();
+    let accuracy = 1 - mistakes / this.wordTargets.length;
+    return {
+      cleared: this.wordsCleared,
+      wpm,
+      time,
+      mistakes,
+      accuracy,
+    };
   }
 
   isLastWord() {
-    return this.wordIndex === this.wordTargets.length - 1
+    return this.wordIndex === this.wordTargets.length - 1;
   }
 
   updateBuffer(event) {
     if (!this.started) {
-      this.started = true
-      this.startTime = new Date()
-      event.target.placeholder = ""
+      this.startRace();
     }
-    let newBuffer = event.target.value
-    let currentWord = this.currentWord().textContent.trim()
-    this.refreshCurrentWordProgress(newBuffer)
+    let newBuffer = event.target.value;
+    let currentWordTarget = this.currentWord()
+    if (!this.currentWord) {
+      return
+    }
+    let currentWord = currentWordTarget.textContent.trim();
+    this.refreshCurrentWordProgress(newBuffer);
     if (newBuffer.endsWith(" ") || this.isLastWord()) {
       if (newBuffer.trim() == currentWord) {
-        event.target.value = ""
-        this.advanceWord()
+        event.target.value = "";
+        this.advanceWord();
       }
     }
   }
 
   mistakeCount() {
-    return Object.keys(this.mistakes).length
+    return Object.keys(this.mistakes).length;
   }
 
   advanceWord() {
-    let currentWord = this.currentWord().textContent.trim()
-    let wordValue = Math.ceil(currentWord.length / 5)
-    this.wordsCleared += wordValue
-    this.updateProgressBar()
+    let currentWord = this.currentWord().textContent.trim();
+    let wordValue = Math.ceil(currentWord.length / 5);
+    this.wordsCleared += wordValue;
+    this.updateProgressBar();
 
-    this.wordIndex++
-    this.refreshStyles()
+    this.wordIndex++;
+    this.refreshStyles();
     if (this.wordIndex >= this.wordTargets.length) {
-      this.completeRace()
+      this.completeRace();
     }
   }
 
+  startRace() {
+      this.started = true;
+      this.startTime = new Date();
+      event.target.placeholder = "";
+      this.interval = setInterval(this.renderStats.bind(this), 500);
+      this.initStatsTarget();
+  }
+
   completeRace() {
-    let { time, mistakes } = this.computeStats()
-    let form = this.finishFormTarget
-    form.elements['race[time]'].value = time
-    form.elements['race[mistakes]'].value = mistakes
-    form.requestSubmit()
+    let { time, mistakes } = this.computeStats();
+    let form = this.finishFormTarget;
+    form.elements["race[time]"].value = time;
+    form.elements["race[mistakes]"].value = mistakes;
+    form.requestSubmit();
   }
 
   refreshCurrentWordProgress(buffer) {
-    let currentWord = this.currentWord()
-    let letters = currentWord.querySelectorAll('.letter')
+    let currentWord = this.currentWord();
+    let letters = currentWord.querySelectorAll(".letter");
     if (!currentWord.textContent.trim().startsWith(buffer.trim())) {
       this.mistakes[this.wordIndex] = true;
     }
     letters.forEach((letter, index) => {
-      let newClasses = ['letter']
-      let bufferChar = buffer.charAt(index)
+      let newClasses = ["letter"];
+      let bufferChar = buffer.charAt(index);
       if (bufferChar) {
         if (letter.textContent === bufferChar) {
-          newClasses.push('cleared')
+          newClasses.push("cleared");
         } else {
-          newClasses.push('mistake')
+          newClasses.push("mistake");
         }
       }
-      letter.className = newClasses.join(' ')
-    })
+      letter.className = newClasses.join(" ");
+    });
   }
 
   refreshStyles() {
     this.wordTargets.forEach((element, index) => {
       if (index < this.wordIndex) {
-        element.classList.add('cleared')
+        element.classList.add("cleared");
       }
-    })
+    });
   }
 }
