@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= favicon_link_tag "favicon.ico" %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -14,7 +15,10 @@
     <div class="container">
     <nav class="navbar navbar-light">
       <div class="container-fluid">
-      <a href="/" class="navbar-brand">CatTyper</a>
+        <a href="/" class="navbar-brand">
+          <%= image_tag "brand.png", width: 50%>
+          CatTyper
+        </a>
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? && current_user.admin? %>
           <li class="nav-item">
