@@ -6,11 +6,11 @@
         Challenge not started!
       </div>
 
-      <div class="progress">
+      <div class="progress my-2">
         <div class="progress-bar" role="progressbar" style="width: 0;" data-race-target="progress"></div>
       </div>
 
-      <p class="race-content">
+      <p class="race-content p-3">
         <span class="text-muted race-preamble"><%= @challenge.preamble %></span>
         <% @challenge.tokens.each do |token| %>
           <span data-race-target="word" class="word"><% token.strip.split("").each do |letter| %><span class="letter"><%= letter %></span><% end %>
