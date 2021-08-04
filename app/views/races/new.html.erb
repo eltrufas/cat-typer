@@ -1,6 +1,6 @@
-<h2>Race based on <%= @prompt.title %></h2>
 <%= turbo_frame_tag "race" do %>
     <%= content_tag "div", data: {"controller" => "race", "race-effective-words-value" => @challenge.effective_words}, class: "race-container" do %>
+      <h2>Race based on <%= @prompt.title %></h2>
 
       <div data-race-target="stats" class="d-flex w-100">
         Challenge not started!

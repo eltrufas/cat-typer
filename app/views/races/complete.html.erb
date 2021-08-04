@@ -1,4 +1,5 @@
 <%= turbo_frame_tag "race" do %>
+  <div class="race-container">
   <h2>Race Complete!</h2>
 
   <h3>You just typed:</h3>
@@ -18,4 +19,5 @@
   </p>
 
   <%= link_to 'Go again!', prompt_races_new_path(@prompt) %>
+  </div>
 <% end %>

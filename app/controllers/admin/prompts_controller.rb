@@ -27,7 +27,7 @@ class Admin::PromptsController < ApplicationController
 
     respond_to do |format|
       if @prompt.save
-        format.html { redirect_to admin_prompt_path(@prompt), notice: "Prompt was successfully created." }
+        format.html { redirect_to admin_prompts_url, notice: "Prompt was successfully created." }
         format.json { render :show, status: :created, location: @prompt }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +40,7 @@ class Admin::PromptsController < ApplicationController
   def update
     respond_to do |format|
       if @prompt.update(prompt_params)
-        format.html { redirect_to [:admin, @prompt], notice: "Prompt was successfully updated." }
+        format.html { redirect_to admin_prompts_url, notice: "Prompt was successfully updated." }
         format.json { render :show, status: :ok, location: @prompt }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -73,7 +73,7 @@ class Admin::PromptsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def prompt_params
-      params.require(:prompt).permit(:title, :body)
+      params.require(:prompt).permit(:title, :body, :description)
     end
 
 end

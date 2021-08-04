@@ -3,11 +3,15 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 .race-container {
-  max-width: xs
+  max-width: 510px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .race-content {
   font-size: 1.2em;
+  background-color: #fff;
+  padding: 5px;
 }
 
 .race-preamble {

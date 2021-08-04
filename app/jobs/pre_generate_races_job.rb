@@ -2,7 +2,7 @@ class PreGenerateRacesJob < ApplicationJob
   queue_as :default
 
   def perform(challenge)
-    generated = text_generator.generate(challenge, 100)
+    generated = text_generator.generate(challenge, 80)
     challenge.text = generated
     challenge.generated = true
     challenge.save
