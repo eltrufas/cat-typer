@@ -1,24 +1,8 @@
-# README
+# CatTyper
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Typing test web app that generates tests using GPT-2.
 
-Things you may want to cover:
+Powered by Rails 6, Stimulus, and Turbo
 
-* Ruby version
+Check it out live [here](https://cat-typer.herokuapp.com/)
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
